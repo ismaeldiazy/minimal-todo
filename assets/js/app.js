@@ -1,20 +1,15 @@
 // Variables
 const taskList = document.getElementById('task-list');
 
-
-
-
 // Event Listeners
-
 eventListeners();
 
 function eventListeners() {
     // When the form is sent
-    document.querySelector('form').addEventListener('submit', addTask)
+    document.querySelector('form').addEventListener('submit', addTask);
+    // Remove tasks
+    taskList.addEventListener('click', removeTask);
 }
-
-
-
 
 // Functions
 function addTask(e) {
@@ -33,4 +28,11 @@ function addTask(e) {
     li.appendChild(removeButton);
     // Add created elements to the task-list div
     taskList.appendChild(li);
+}
+
+function removeTask (e) {
+    e.preventDefault();
+    if (e.target.className === 'remove-task') {
+        e.target.parentElement.remove();
+    }
 }
