@@ -40,6 +40,8 @@ function removeTask (e) {
     e.preventDefault();
     if (e.target.className === 'remove-task') {
         e.target.parentElement.remove();
+        storedTask = e.target.parentElement.innerText;
+        removeFromLocalStorage(storedTask);
     }
 }
 
@@ -90,4 +92,24 @@ function getTaskFromLocalStorage() {
         console.log(tasks, typeof tasks)
     }
     return tasks;
+}
+
+// Remove element from LocalStorage
+function removeFromLocalStorage(task) {
+    let tasks, removeTask
+    // Substring with the text of the li element without the remove button (X)
+    removeTask = task.substring(0, task.length - 1);
+    // getting content from LocalStorage
+    tasks = getTaskFromLocalStorage();
+    // Iterate over the array
+    tasks.forEach(function(task, index) {
+        // If the substring value is equal to
+        // a stored one
+        if (removeTask === task) {
+            // remove it from LocalStorage
+            tasks.splice(index, 1);
+        }
+    });
+    // Update the content of the stored array after something is removed
+    localStorage.setItem('tasks', JSON.stringify(tasks));
 }
