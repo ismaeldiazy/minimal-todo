@@ -28,11 +28,39 @@ function addTask(e) {
     li.appendChild(removeButton);
     // Add created elements to the task-list div
     taskList.appendChild(li);
+    // Add task to LocalStorage
+    addToLocalStorage(task);
 }
-
+// Remove task from the DOM
 function removeTask (e) {
     e.preventDefault();
     if (e.target.className === 'remove-task') {
         e.target.parentElement.remove();
     }
+}
+// Add task to LocalStorage
+function addToLocalStorage(task) {
+    let tasks;
+    tasks = getTaskFromLocalStorage();
+    // Add new element to the end of the array
+    tasks.push(task);
+    // JSON to string (when sending data to a web server
+    // it has to be a string)
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+}
+
+function getTaskFromLocalStorage() {
+    let tasks;
+    //Check LocalStorage values
+    // If empty
+    if (localStorage.getItem('tasks') === null) {
+        // Create empty array
+        tasks = [];
+    // If not
+    }else {
+        // Add task to the JSON
+        tasks = JSON.parse(localStorage.getItem('tasks'));
+        console.log(tasks, typeof tasks)
+    }
+    return tasks;
 }
