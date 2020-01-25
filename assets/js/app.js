@@ -9,7 +9,6 @@ function eventListeners() {
     document.querySelector('form').addEventListener('submit', addTask);
     // Remove tasks
     taskList.addEventListener('click', removeTask);
-
     // The function is triggered once the DOM is loaded
     document.addEventListener('DOMContentLoaded', localStorageReady);
 }
@@ -19,7 +18,7 @@ function addTask(e) {
     // Method to prevent the default action of the form
     e.preventDefault()
     // Read textarea value
-    const task = document.getElementById('task').value;
+    const task = document.getElementById('task').value; 
     // Create elements
     const li = document.createElement('li');
     const removeButton = document.createElement('a');
@@ -33,10 +32,12 @@ function addTask(e) {
     taskList.appendChild(li);
     // Add task to LocalStorage
     addToLocalStorage(task);
+    // The form will be reset after submit
+    clearForm();
 }
 
 // Remove task from the DOM
-function removeTask (e) {
+function removeTask(e) {
     e.preventDefault();
     if (e.target.className === 'remove-task') {
         e.target.parentElement.remove();
@@ -89,7 +90,6 @@ function getTaskFromLocalStorage() {
     }else {
         // Add task to the JSON
         tasks = JSON.parse(localStorage.getItem('tasks'));
-        console.log(tasks, typeof tasks)
     }
     return tasks;
 }
@@ -112,4 +112,8 @@ function removeFromLocalStorage(task) {
     });
     // Update the content of the stored array after something is removed
     localStorage.setItem('tasks', JSON.stringify(tasks));
+}
+// Function to clear the form
+function clearForm() {
+    document.querySelector('form').reset();
 }
