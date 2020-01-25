@@ -9,6 +9,9 @@ function eventListeners() {
     document.querySelector('form').addEventListener('submit', addTask);
     // Remove tasks
     taskList.addEventListener('click', removeTask);
+
+    // 'DOMContentLoaded' is when all the document has finished to load
+    document.addEventListener('DOMContentLoaded', localStorageReady);
 }
 
 // Functions
@@ -31,6 +34,7 @@ function addTask(e) {
     // Add task to LocalStorage
     addToLocalStorage(task);
 }
+
 // Remove task from the DOM
 function removeTask (e) {
     e.preventDefault();
@@ -38,6 +42,7 @@ function removeTask (e) {
         e.target.parentElement.remove();
     }
 }
+
 // Add task to LocalStorage
 function addToLocalStorage(task) {
     let tasks;
@@ -49,6 +54,28 @@ function addToLocalStorage(task) {
     localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
+// Function to print elements stored in LocalStorage
+function localStorageReady() {
+    let tasks;
+
+    tasks = getTaskFromLocalStorage();
+
+    tasks.forEach(function(task) {
+        // Create elements
+        const li = document.createElement('li');
+        const removeButton = document.createElement('a');
+        removeButton.classList = 'remove-task';
+        removeButton.innerText = 'X';
+        // Add readed value to the li element
+        li.innerText = task;
+        // Add remove button to li element
+        li.appendChild(removeButton);
+        // Add created elements to the task-list div
+        taskList.appendChild(li);
+    });
+}
+
+// Check if there are elements in LocalStorage, then returns an array
 function getTaskFromLocalStorage() {
     let tasks;
     //Check LocalStorage values
