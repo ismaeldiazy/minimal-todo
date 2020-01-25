@@ -10,7 +10,7 @@ function eventListeners() {
     // Remove tasks
     taskList.addEventListener('click', removeTask);
 
-    // 'DOMContentLoaded' is when all the document has finished to load
+    // The function is triggered once the DOM is loaded
     document.addEventListener('DOMContentLoaded', localStorageReady);
 }
 
